@@ -4,7 +4,6 @@ import { StyleSheet } from 'react-native'
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#ebebeb"
     },
     header: {
         width: '100%',
@@ -33,7 +32,36 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     items: {
-        marginTop: 30
+        marginTop: 30,
+    },
+    writeTaskWrapper: {
+        position: 'absolute',
+        bottom: 50,
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center'
+    },
+    input: {
+        paddingVertical: 15,
+        width: 250,
+        backgroundColor: '#FFF',
+        borderRadius: 60,
+        borderColor: '#C0C0C0',
+        borderWidth: 1
+    },
+    addWrapper: {
+        width: 60,
+        height: 60,
+        backgroundColor: '#FFF',
+        borderRadius: 60,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderColor: '#C0C0C0',
+        borderWidth: 1
+    },
+    addText: {
+
     }
 })
 
