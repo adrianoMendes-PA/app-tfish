@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, StatusBar, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StatusBar, TouchableOpacity, KeyboardAvoidingView, Platform, Keyboard } from 'react-native';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
@@ -9,6 +9,22 @@ import { TextInput } from 'react-native-gesture-handler';
 import Task from '../../../components/Tasks/tasks';
 
 export default () => {
+
+    const [task, setTask] = useState();
+    const [taskItems, setTaskItems] = useState([]);
+
+    const handleAddTask = () => {
+        Keyboard.dismiss();
+        setTaskItems([...taskItems, task]);
+        setTask(null);
+    }
+
+    const completeTask = (index) => {
+        let intemsCopy = [...taskItems];
+        intemsCopy.slice(index, 1);
+        setTaskItems(intemsCopy);
+    }
+
     const navigation = useNavigation();
 
     function voltar() {
@@ -31,16 +47,23 @@ export default () => {
             <View style={styles.tasksWrapper}>
                 <Text style={styles.sectionTitle}>Tarefa do dia</Text>
                 <View style={styles.items}>
-                    <Task text={'Terefa1'} />
-                    <Task text={'Terefa2'} />
+                    {
+                        taskItems.map((item, index) => {
+                            return (
+                                <TouchableOpacity key={index} onPress={() => completeTask(index)}>
+                                    <Task text={item} />
+                                </TouchableOpacity>
+                            )
+                        })
+                    }
                 </View>
             </View>
             {/* ESCREVER UMA TAREFA */}
             <KeyboardAvoidingView
                 behavior={Platform.OS === "ios" ? 'padding' : 'height'}
                 style={styles.writeTaskWrapper}>
-                <TextInput style={styles.input} placeholder={'Escreva uma tarefa'} />
-                <TouchableOpacity>
+                <TextInput style={styles.input} placeholder={'Escreva uma tarefa'} value={task} onChangeText={text => setTask(text)} />
+                <TouchableOpacity onPress={() => handleAddTask()}>
                     <View style={styles.addWrapper}>
                         <Text style={styles.addText}>+</Text>
                     </View>
